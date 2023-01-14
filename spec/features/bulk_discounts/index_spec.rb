@@ -25,6 +25,26 @@ RSpec.describe 'The bulk discount index page', type: :feature do
       expect(page).to have_link "Discount Info", count: merchant_1.bulk_discounts.length
     end
 
+    describe 'Delete Link' do
+      it 'has a delete link for each discount' do
+        merchant_1.bulk_discounts.each do |bulk_discount|
+          within("#bulk_discount_#{bulk_discount.id}") do
+            expect(page).to have_link 'Delete Discount'
+          end
+        end
+      end
+
+      it 'deletes a discount and redirects back to the index page' do
+        bd = merchant_1.bulk_discounts.first
+        within("#bulk_discount_#{bd.id}") do
+          click_link "Delete Discount"
+        end
+
+        expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
+        expect(page).to_not have_selector "bulk_discount_#{bd.id}"
+      end
+    end
+
     it 'has a link to create a new discount' do
       expect(page).to have_button "Create Discount"
 
