@@ -13,7 +13,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
   describe 'when a merchant visits the bulk discount new page' do
     it 'has a form to add a new discount' do
-      expect(page).to have_field "Quantity"
+      expect(page).to have_field "Discount"
       expect(page).to have_field "Threshold"
       expect(page).to have_button "Submit"
     end
