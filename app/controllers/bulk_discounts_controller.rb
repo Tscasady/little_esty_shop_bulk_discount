@@ -6,7 +6,10 @@ class BulkDiscountsController < ApplicationController
   end
 
   def show
-   require 'pry'; binding.pry 
+  end
+
+  def new
+    
   end
 
   private
