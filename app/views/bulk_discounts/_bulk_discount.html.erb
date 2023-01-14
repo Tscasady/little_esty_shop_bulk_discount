@@ -3,5 +3,6 @@
   <p>Discount ID: <%= bulk_discount.id %></p>
   <p>Discount: <%= bulk_discount.discount %></p>
   <p>Threshold: <%= bulk_discount.threshold %></p>
+  <p><%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant, bulk_discount), method: :delete %></p>
   <br>
 </div>
