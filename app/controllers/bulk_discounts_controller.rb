@@ -5,6 +5,10 @@ class BulkDiscountsController < ApplicationController
     @bulk_discounts = @merchant.bulk_discounts
   end
 
+  def show
+   require 'pry'; binding.pry 
+  end
+
   private
 
   def get_merchant

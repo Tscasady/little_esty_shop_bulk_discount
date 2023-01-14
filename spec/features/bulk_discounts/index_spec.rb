@@ -18,5 +18,10 @@ RSpec.describe 'The bulk discount index page', type: :feature do
       expect(page).to have_content "Threshold: #{merchant_1.bulk_discounts.second.threshold}"      
       expect(page).to have_content "Threshold: #{merchant_1.bulk_discounts.third.threshold}"      
     end
+
+    it 'has a link to each discount show page' do
+      visit merchant_bulk_discounts_path(merchant_1)
+      expect(page).to have_link "Discount Info", count: merchant_1.bulk_discounts.length
+    end
   end
 end
