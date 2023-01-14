@@ -10,12 +10,6 @@ FactoryBot.define do
     customer
   end
 
-  factory :merchant do
-    name {Faker::Space.galaxy}
-    invoices
-    items
-  end
-
   factory :item do
     name {Faker::Coffee.variety}
     description {Faker::Hipster.sentence}
@@ -33,5 +27,11 @@ FactoryBot.define do
     status {[0,1,2].sample}
     merchant
     invoice
+  end
+
+  factory :bulk_discount do
+    discount {20}
+    threshold {10}
+    merchant
   end
 end
