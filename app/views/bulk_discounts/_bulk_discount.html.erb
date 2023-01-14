@@ -1,5 +1,6 @@
-<div id="bulk_discount_#{bulk_discount.id}">
+<div id="bulk_discount_<%= bulk_discount.id %>">
   <p><%= link_to "Discount Info", merchant_bulk_discount_path(@merchant, bulk_discount) %></p>
+  <p>Discount ID: <%= bulk_discount.id %></p>
   <p>Discount: <%= bulk_discount.discount %></p>
   <p>Threshold: <%= bulk_discount.threshold %></p>
   <br>

@@ -18,12 +18,17 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
       expect(page).to have_button "Submit"
     end
 
-    it 'redirects back to the bulk index page when a discount is submitted' do
+    it 'when submitted it redirects back to the bulk index page and displays the new discount' do
       fill_in "Discount", with: 20
       fill_in "Threshold", with: 25
       click_button "Submit"
-      
+      new_discount = BulkDiscount.last
+
       expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
+
+      within("#bulk_discount_#{new_discount.id}") do
+        expect(page).to have_content "#{new_discount.id}"
+      end
     end
 
     describe 'it returns to the new page with an error message if invalid data is given' do
