@@ -64,6 +64,7 @@
       padding: 8px;
     }
     </style>
+    <%= javascript_include_tag "application" %>
   </head>
 
   <body>
@@ -73,7 +74,6 @@
         <h3><b><%= notice %></b></h3>
       <% end %>
       <%= yield %>
-
     </div>
   </body>
 </html>

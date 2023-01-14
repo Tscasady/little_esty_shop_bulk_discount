@@ -1,2 +1,3 @@
 <h2>Bulk Discounts</h2>
 <%= render partial: "bulk_discount", collection: @bulk_discounts %>
+<%= button_to "Create Discount", new_merchant_bulk_discount_path, method: :get %>
