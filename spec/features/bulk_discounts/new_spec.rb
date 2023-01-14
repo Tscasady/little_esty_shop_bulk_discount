@@ -17,5 +17,13 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
       expect(page).to have_field "Threshold"
       expect(page).to have_button "Submit"
     end
+
+    it 'redirects back to the bulk index page when a discount is submitted' do
+      fill_in "Discount", with: 20
+      fill_in "Threshold", with: 25
+      click_button "Submit"
+      
+      except(current_path).to eq merchant_bulk_discounts_path(merchant_1)
+    end
   end
 end
