@@ -25,5 +25,40 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
       
       expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
     end
+
+    describe 'it returns to the new page with an error message' do
+      context 'if discount < 0' do
+        it "displays ''" do
+          fill_in "Discount", with: -2
+          click_button "Submit"
+          expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
+          expect(page).to have_content ""
+        end
+      end
+
+      context 'if discount > 100' do
+        it '' do
+
+        end
+      end
+
+      context 'if discount is a string' do
+        it '' do
+
+        end
+      end
+
+      context 'if threshold is < 0' do
+        it '' do
+
+        end
+      end
+
+      context 'if threshold is a string' do
+        it '' do
+
+        end
+      end
+    end
   end
 end
