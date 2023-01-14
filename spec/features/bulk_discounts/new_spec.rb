@@ -23,7 +23,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
       fill_in "Threshold", with: 25
       click_button "Submit"
       
-      except(current_path).to eq merchant_bulk_discounts_path(merchant_1)
+      expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
     end
   end
 end
