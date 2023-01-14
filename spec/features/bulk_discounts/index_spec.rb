@@ -30,7 +30,7 @@ RSpec.describe 'The bulk discount index page', type: :feature do
 
       click_button "Create Discount"
 
-      expect(current_path).to eq new_merchant_bulk_discount
+      expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
     end
   end
 end
