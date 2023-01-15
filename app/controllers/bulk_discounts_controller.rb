@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
   before_action :get_merchant, except: [:update] 
-  before_action :get_bulk_discount, only: [:destroy, :show]
+  before_action :get_bulk_discount, only: [:destroy, :show, :edit]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
