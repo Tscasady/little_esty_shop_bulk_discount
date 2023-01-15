@@ -52,5 +52,14 @@ RSpec.describe 'The bulk discount index page', type: :feature do
 
       expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
     end
+
+    it 'has a section called Upcoming Holidays' do
+      expect(page).to have_selector "section", text: "Upcoming Holidays"
+    end
+
+    it 'displays the name and date of the next three US holidays' do
+      holidays = HolidayDecorator.new
+      expect(page).to have_content holidays.display
+    end
   end
 end
