@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
   before_action :get_merchant, except: [:update] 
-  before_action :get_bulk_discount, only: [:destroy, :show, :edit]
+  before_action :get_bulk_discount, only: [:destroy, :show, :edit, :update]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -14,6 +14,15 @@ class BulkDiscountsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @bulk_discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path
+    else
+      flash[:alert] = bulk_discount.errors.full_messages.to_sentence
+      redirect_to edit_merchant_bulk_discount_path
+    end
   end
 
   def create

@@ -22,8 +22,8 @@ RSpec.describe 'The bulk discount edit page', type: :feature do
       click_button "Update"
 
       expect(current_path).to eq merchant_bulk_discount_path(merchant_1, bd_1)
-      except(page).to have_content "Discount: 17%"
-      except(page).to have_content "Threshold: 33"
+      expect(page).to have_content "Discount: 17%"
+      expect(page).to have_content "Threshold: 33"
     end
 
     describe "Sad Paths" do
