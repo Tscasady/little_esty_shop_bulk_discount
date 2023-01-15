@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'invoices show' do
   before :each do
@@ -74,15 +75,15 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content(@item_1.name)
     expect(page).to have_content(@ii_1.quantity)
-    expect(page).to have_content(@ii_1.unit_price)
-    expect(page).to_not have_content(@ii_4.unit_price)
+    expect(page).to have_content(number_to_currency(@ii_1.unit_price / 100.0))
+    expect(page).to_not have_content(number_to_currency(@ii_4.unit_price / 100.0))
 
   end
 
   it "shows the total revenue for this invoice" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(@invoice_1.total_revenue)
+    expect(page).to have_content(number_to_currency(@invoice_1.total_revenue / 100.0))
   end
 
   it "shows a select field to update the invoice status" do
