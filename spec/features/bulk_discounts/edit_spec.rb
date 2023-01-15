@@ -28,7 +28,12 @@ RSpec.describe 'The bulk discount edit page', type: :feature do
 
     describe "Sad Paths" do
       it 'will redirect back to this page with an error message if the information is invalid' do
-
+        fill_in "Discount", with: "Great Deal"
+        fill_in "Threshold", with: -12
+        click_button "Update"
+        
+        expect(current_path).to eq edit_merchant_bulk_discount_path(merchant_1, bd_1)
+        expect(page).to have_content "Discount is not a number and Threshold must be greater than 0"
       end
     end
   end

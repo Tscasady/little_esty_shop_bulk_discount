@@ -20,7 +20,7 @@ class BulkDiscountsController < ApplicationController
     if @bulk_discount.update(bulk_discount_params)
       redirect_to merchant_bulk_discount_path
     else
-      flash[:alert] = bulk_discount.errors.full_messages.to_sentence
+      flash[:alert] = @bulk_discount.errors.full_messages.to_sentence
       redirect_to edit_merchant_bulk_discount_path
     end
   end
