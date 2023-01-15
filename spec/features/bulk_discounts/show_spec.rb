@@ -11,6 +11,7 @@ RSpec.describe 'The Bulk Discount Show page', type: :feature do
     end
 
     it 'displays threshold and percent discount of the bulk discount' do
+
       expect(page).to have_content "Discount: #{bd_1.discount}%"
       expect(page).to have_content "Threshold: #{bd_1.threshold}"
     end
