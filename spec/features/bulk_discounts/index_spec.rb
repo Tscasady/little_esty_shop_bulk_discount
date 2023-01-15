@@ -52,5 +52,20 @@ RSpec.describe 'The bulk discount index page', type: :feature do
 
       expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
     end
+
+    it 'has a section called Upcoming Holidays' do
+      expect(page).to have_selector "section", text: "Upcoming Holidays"
+    end
+
+    it 'displays the name and date of the next three US holidays' do
+      holidays = HolidayData.new.holidays
+      save_and_open_page
+      expect(page).to have_content "Name: #{holidays[0].name}"
+      expect(page).to have_content "Name: #{holidays[1].name}"
+      expect(page).to have_content "Name: #{holidays[2].name}"
+      expect(page).to have_content "Date: #{holidays[0].date.strftime("%A, %B %-d, %Y")}"
+      expect(page).to have_content "Date: #{holidays[1].date.strftime("%A, %B %-d, %Y")}"
+      expect(page).to have_content "Date: #{holidays[2].date.strftime("%A, %B %-d, %Y")}"
+    end
   end
 end
