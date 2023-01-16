@@ -21,6 +21,8 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= price(@invoice.total_revenue) %></p>
+  <p>Total Revenue for Merchant: <%= price(@merchant.total_revenue_for_merchant(@invoice)) %></p>
+  <p>Total Discounted Revenue for Merchant: <%= price(@merchant.discounted_revenue(@invoice)) %></p>
 
 
   <h4>Customer:</h4>
