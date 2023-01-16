@@ -9,4 +9,4 @@
 # ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 5, unit_price: 50, status: 1)
 # ii_12 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_9.id, quantity: 6, unit_price: 150, status: 1)
 # bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: merchant1)
-# bd_2 = BulkDiscount.create!(threshoild: 20, discount: 30, merchant: merchant1)
+# bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: merchant1)
