@@ -59,7 +59,7 @@ RSpec.describe 'The bulk discount index page', type: :feature do
 
     it 'displays the name and date of the next three US holidays' do
       holidays = HolidayData.new.holidays
-      save_and_open_page
+      
       expect(page).to have_content "Name: #{holidays[0].name}"
       expect(page).to have_content "Name: #{holidays[1].name}"
       expect(page).to have_content "Name: #{holidays[2].name}"
