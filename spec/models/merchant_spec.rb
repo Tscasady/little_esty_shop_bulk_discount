@@ -158,5 +158,17 @@ describe Merchant do
     it "best_day" do
       expect(@merchant1.best_day).to eq(@invoice_8.created_at.to_date)
     end
+
+    it 'discounted_revenue' do
+      @invoice_9 = Invoice.create!(customer_id: @customer_6.id, status: 2)
+      @ii_11 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_5.id, quantity: 1, unit_price: 1500, status: 1, created_at: "2012-04-04 14:54:09")
+      @ii_12 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_6.id, quantity: 2, unit_price: 1000, status: 1, created_at: "2012-04-04 14:54:09")
+      @ii_13 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_4.id, quantity: 10, unit_price: 100, status: 1, created_at: "2012-04-04 14:54:09")
+      @ii_14 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_3.id, quantity: 1, unit_price: 500, status: 1, created_at: "2012-04-04 14:54:09")
+      @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @merchant1)
+      @bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: @merchant2)
+
+      expect(@merchant1.discounted_revenue).to eq(1300)
+    end
   end
 end
