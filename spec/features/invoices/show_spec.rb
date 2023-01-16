@@ -101,6 +101,22 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content("Total Discounted Revenue for Merchant: #{number_to_currency(@invoice_1.discounted_revenue / 100.0)}")
   end
 
+  it "shows the % discount applied to any invoice item" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+save_and_open_page
+    within(".table") do
+      expect(page).to have_content ""
+    end
+  end
+
+  it "shows 'None' if no discount was applied" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within(".table") do
+      expect(page).to have_content "None"
+    end
+  end
+
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
