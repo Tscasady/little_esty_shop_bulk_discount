@@ -77,6 +77,15 @@ RSpec.describe Invoice, type: :model do
 
         expect(@invoice_1.discounted_revenue).to eq(14500)
       end
+
+      it 'can return the discounted revenue by applying discounts to from various merchants' do
+        @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
+        @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_9.id, quantity: 5, unit_price: 1500, status: 1)
+        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 30, merchant: @merchant1)
+        @bd_2 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @merchant2)
+
+        expect(@invoice_1.discounted_revenue).to eq(13000)
+      end
     end
   end
 end
