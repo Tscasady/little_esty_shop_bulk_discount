@@ -86,10 +86,16 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(number_to_currency(@invoice_1.total_revenue / 100.0))
   end
 
-  it 'shows the total revenune for this invoice with discounts' do
+  it 'shows the total revenue for this invoice and this merchant' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(number_to_currency(@invoice_1.discounted_revenue / 100.0))
+    expect(page).to have_content "Merchant Revenue: #{number_to_currency(@merchant1.total_revenue_for_merchant(@invoice_1) / 100.0)}"
+  end
+
+  it 'shows the total revenue for this invoice with discounts for this merchant' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Merchant Revenue with discounts: #{number_to_currency(@invoice_1.discounted_revenue / 100.0)}")
   end
 
   it "shows a select field to update the invoice status" do
