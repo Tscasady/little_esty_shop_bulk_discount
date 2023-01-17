@@ -1,3 +1,8 @@
+<div id="holiday_<%=holiday_iteration.index%>">
 <%= "Name: #{holiday.name}" %>
+<br>
 <%= "Date: #{holiday.date.strftime("%A, %B %-d, %Y")}" %>
 <br>
+<%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path, method: :get %>
+<br>
+</div>
