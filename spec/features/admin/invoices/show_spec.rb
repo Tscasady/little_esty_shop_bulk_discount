@@ -1,6 +1,7 @@
 require 'rails_helper'
+include ApplicationHelper
 
-describe 'Admin Invoices Index Page' do
+describe 'Admin Invoices Show Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
@@ -45,26 +46,26 @@ describe 'Admin Invoices Index Page' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_2.quantity)
 
-    expect(page).to have_content("$#{@ii_1.unit_price}")
-    expect(page).to have_content("$#{@ii_2.unit_price}")
+    expect(page).to have_content("#{price(@ii_1.unit_price)}")
+    expect(page).to have_content("#{price(@ii_2.unit_price)}")
 
     expect(page).to have_content(@ii_1.status)
     expect(page).to have_content(@ii_2.status)
 
     expect(page).to_not have_content(@ii_3.quantity)
-    expect(page).to_not have_content("$#{@ii_3.unit_price}")
+    expect(page).to_not have_content("#{price(@ii_3.unit_price)}")
     expect(page).to_not have_content(@ii_3.status)
   end
 
   it 'should display the total revenue the invoice will generate' do
-    expect(page).to have_content("Total Revenue: #{number_to_currency(@i1.total_revenue / 100.0)}")
+    expect(page).to have_content("Total Revenue: #{price(@i1.total_revenue)}")
 
-    expect(page).to_not have_content(number_to_currency(@i2.total_revenue / 100.0))
+    expect(page).to_not have_content(price(@i2.total_revenue))
   end
 
   it 'shows the total revenue for this invoice with discounts' do
-    expect(page).to have_content("Total Discounted Revenue: #{number_to_currency(@i1.discounted_revenue / 100.0)}")
-    expect(page).to_not have_content(number_to_currency(@i2.discounted_revenue / 100.0))
+    expect(page).to have_content("Total Discounted Revenue: #{price(@i1.discounted_revenue)}")
+    expect(page).to_not have_content(price(@i2.discounted_revenue))
   end
 
   it 'should have status as a select field that updates the invoices status' do
