@@ -13,6 +13,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
   describe 'when a merchant visits the bulk discount new page' do
     it 'has a form to add a new discount' do
+      expect(page).to have_field "Name"
       expect(page).to have_field "Discount"
       expect(page).to have_field "Threshold"
       expect(page).to have_button "Submit"
@@ -20,6 +21,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
     it 'when submitted it redirects back to the bulk index page and displays the new discount' do
       fill_in "Discount", with: 20
+      fill_in "Name", with: "New Discount"
       fill_in "Threshold", with: 25
       click_button "Submit"
       new_discount = BulkDiscount.last
@@ -27,13 +29,16 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
       expect(current_path).to eq merchant_bulk_discounts_path(merchant_1)
 
       within("#bulk_discount_#{new_discount.id}") do
-        expect(page).to have_content "#{new_discount.id}"
+        expect(page).to have_content "New Discount"
+        expect(page).to have_content 25
+        expect(page).to have_content 20
       end
     end
 
     describe 'it returns to the new page with an error message if invalid data is given' do
       context 'if discount < 0' do
         it "displays discountmust be greater than 0" do
+          fill_in "Name", with: "New Discount"
           fill_in "Discount", with: -2
           fill_in "Threshold", with: 10
           click_button "Submit"
@@ -44,6 +49,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
       context 'if discount < 100' do
         it 'displays discount must be less than 100' do
+          fill_in "Name", with: "New Discount"
           fill_in "Discount", with: 110 
           fill_in "Threshold", with: 10
           click_button "Submit"
@@ -54,6 +60,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
       context 'if discount is a string' do
         it 'displays that discount is not a number' do
+          fill_in "Name", with: "New Discount"
           fill_in "Discount", with: "Big Discount"
           fill_in "Threshold", with: 10
           click_button "Submit"
@@ -64,6 +71,7 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
       context 'if threshold is < 0' do
         it 'displays threshold must be greater than 0' do
+          fill_in "Name", with: "New Discount"
           fill_in "Discount", with: 20
           fill_in "Threshold", with: -10
           click_button "Submit"
@@ -74,6 +82,18 @@ RSpec.describe 'The Bulk Discount new page', type: :feature do
 
       context 'if threshold is a string' do
         it 'displays threshold is not a number' do
+          fill_in "Name", with: "New Discount"
+          fill_in "Discount", with: 20
+          fill_in "Threshold", with: "A few items"
+          click_button "Submit"
+          expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
+          expect(page).to have_content "Threshold is not a number"
+        end
+      end
+      
+      context 'if name is a blank' do
+        it 'displays threshold is not a number' do
+          fill_in "Name", with: ""
           fill_in "Discount", with: 20
           fill_in "Threshold", with: "A few items"
           click_button "Submit"
