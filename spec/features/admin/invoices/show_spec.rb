@@ -1,6 +1,7 @@
 require 'rails_helper'
+include ApplicationHelper
 
-describe 'Admin Invoices Index Page' do
+describe 'Admin Invoices Show Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
@@ -16,6 +17,9 @@ describe 'Admin Invoices Index Page' do
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
+
+    @bd_1 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @m1)
+    @bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: @m1)
 
     visit admin_invoice_path(@i1)
   end
@@ -42,21 +46,26 @@ describe 'Admin Invoices Index Page' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_2.quantity)
 
-    expect(page).to have_content("$#{@ii_1.unit_price}")
-    expect(page).to have_content("$#{@ii_2.unit_price}")
+    expect(page).to have_content("#{price(@ii_1.unit_price)}")
+    expect(page).to have_content("#{price(@ii_2.unit_price)}")
 
     expect(page).to have_content(@ii_1.status)
     expect(page).to have_content(@ii_2.status)
 
     expect(page).to_not have_content(@ii_3.quantity)
-    expect(page).to_not have_content("$#{@ii_3.unit_price}")
+    expect(page).to_not have_content("#{price(@ii_3.unit_price)}")
     expect(page).to_not have_content(@ii_3.status)
   end
 
   it 'should display the total revenue the invoice will generate' do
-    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+    expect(page).to have_content("Total Revenue: #{price(@i1.total_revenue)}")
 
-    expect(page).to_not have_content(@i2.total_revenue)
+    expect(page).to_not have_content(price(@i2.total_revenue))
+  end
+
+  it 'shows the total revenue for this invoice with discounts' do
+    expect(page).to have_content("Total Discounted Revenue: #{price(@i1.discounted_revenue)}")
+    expect(page).to_not have_content(price(@i2.discounted_revenue))
   end
 
   it 'should have status as a select field that updates the invoices status' do

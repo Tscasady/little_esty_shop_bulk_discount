@@ -1,6 +1,7 @@
 require 'rails_helper'
 include ActionView::Helpers::NumberHelper
 
+
 RSpec.describe 'invoices show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -78,27 +79,26 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content(@item_1.name)
     expect(page).to have_content(@ii_1.quantity)
-    expect(page).to have_content(number_to_currency(@ii_1.unit_price / 100.0))
-    expect(page).to_not have_content(number_to_currency(@ii_4.unit_price / 100.0))
-
+    expect(page).to have_content(price(@ii_1.unit_price))
+    expect(page).to_not have_content(price(@ii_4.unit_price))
   end
 
   it "shows the total revenue for this invoice" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(number_to_currency(@invoice_1.total_revenue / 100.0))
+    expect(page).to have_content(price(@invoice_1.total_revenue))
   end
 
   it 'shows the total revenue for this invoice and this merchant' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content "Total Revenue for Merchant: #{number_to_currency(@merchant1.total_revenue_for_merchant(@invoice_1) / 100.0)}"
+    expect(page).to have_content "Total Revenue for Merchant: #{price(@merchant1.total_revenue_for_merchant(@invoice_1))}"
   end
 
   it 'shows the total revenue for this invoice with discounts for this merchant' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content("Total Discounted Revenue for Merchant: #{number_to_currency(@invoice_1.discounted_revenue / 100.0)}")
+    expect(page).to have_content("Total Discounted Revenue for Merchant: #{price(@merchant1.discounted_revenue(@invoice_1))}")
   end
 
   it "shows the % discount applied to any invoice item" do
