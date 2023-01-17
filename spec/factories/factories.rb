@@ -30,6 +30,7 @@ FactoryBot.define do
   end
 
   factory :bulk_discount do
+    sequence(:name) { |n| "BD_#{n}"}
     discount {20}
     threshold {10}
     merchant

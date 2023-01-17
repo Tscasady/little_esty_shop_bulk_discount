@@ -11,7 +11,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
-    @bulk_discount = BulkDiscount.new
+    @bulk_discount = BulkDiscount.new(button_params)
   end
 
   def edit
@@ -50,7 +50,11 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.find(params[:id])
   end
 
+  def button_params
+    params.permit(:discount, :threshold, :name)
+  end
+
   def bulk_discount_params
-    params.require(:bulk_discount).permit(:discount, :threshold)
+    params.require(:bulk_discount).permit(:discount, :threshold, :name)
   end
 end

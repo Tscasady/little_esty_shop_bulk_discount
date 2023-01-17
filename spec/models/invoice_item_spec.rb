@@ -63,8 +63,8 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
 
-      @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @m1)
-      @bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: @m1)
+      @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 20, merchant: @m1)
+      @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 20, discount: 30, merchant: @m1)
     end
     describe 'discount' do
       it 'returns the discount that has been applied' do

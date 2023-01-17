@@ -53,19 +53,38 @@ RSpec.describe 'The bulk discount index page', type: :feature do
       expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
     end
 
-    it 'has a section called Upcoming Holidays' do
-      expect(page).to have_selector "section", text: "Upcoming Holidays"
-    end
+    describe 'Holidays' do
+      it 'has a section called Upcoming Holidays' do
+        expect(page).to have_selector "section", text: "Upcoming Holidays"
+      end
 
-    it 'displays the name and date of the next three US holidays' do
-      holidays = HolidayData.new.holidays
-      
-      expect(page).to have_content "Name: #{holidays[0].name}"
-      expect(page).to have_content "Name: #{holidays[1].name}"
-      expect(page).to have_content "Name: #{holidays[2].name}"
-      expect(page).to have_content "Date: #{holidays[0].date.strftime("%A, %B %-d, %Y")}"
-      expect(page).to have_content "Date: #{holidays[1].date.strftime("%A, %B %-d, %Y")}"
-      expect(page).to have_content "Date: #{holidays[2].date.strftime("%A, %B %-d, %Y")}"
+      it 'displays the name and date of the next three US holidays' do
+        holidays = HolidayData.new.holidays
+        
+        expect(page).to have_content "Name: #{holidays[0].name}"
+        expect(page).to have_content "Name: #{holidays[1].name}"
+        expect(page).to have_content "Name: #{holidays[2].name}"
+        expect(page).to have_content "Date: #{holidays[0].date.strftime("%A, %B %-d, %Y")}"
+        expect(page).to have_content "Date: #{holidays[1].date.strftime("%A, %B %-d, %Y")}"
+        expect(page).to have_content "Date: #{holidays[2].date.strftime("%A, %B %-d, %Y")}"
+      end
+
+      it 'has a button to create a discount for a holiday' do
+        expect(page).to have_button "Create Holiday Discount", count: 3
+      end
+
+      it 'this button redirects to the new discount page with prefilled forms' do
+        holidays = HolidayData.new.holidays
+        
+        within("#holiday_1") do
+          click_button "Create Holiday Discount"
+        end
+
+        expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
+        expect(page).to have_field "Name", with: "#{holidays[1].name}" 
+        expect(page).to have_field "Discount", with: 30
+        expect(page).to have_field "Threshold", with: 2
+      end
     end
   end
 end
