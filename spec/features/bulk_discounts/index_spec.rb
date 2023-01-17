@@ -12,17 +12,23 @@ RSpec.describe 'The bulk discount index page', type: :feature do
       visit merchant_bulk_discounts_path(merchant_1)
     end
     it 'displays all discounts with their percentage and thresholds' do
-
-      expect(page).to have_content "Discount: #{merchant_1.bulk_discounts.first.discount}"      
-      expect(page).to have_content "Discount: #{merchant_1.bulk_discounts.second.discount}"      
-      expect(page).to have_content "Discount: #{merchant_1.bulk_discounts.third.discount}"      
-      expect(page).to have_content "Threshold: #{merchant_1.bulk_discounts.first.threshold}"      
-      expect(page).to have_content "Threshold: #{merchant_1.bulk_discounts.second.threshold}"      
-      expect(page).to have_content "Threshold: #{merchant_1.bulk_discounts.third.threshold}"      
+      merchant_1.bulk_discounts.each do |bulk_discount|
+        within("#bulk_discount_#{bulk_discount.id}") do
+          expect(page).to have_content "Discount: #{bulk_discount.discount}"      
+          expect(page).to have_content "Threshold: #{bulk_discount.threshold}"      
+        end
+      end
     end
 
     it 'has a link to each discount show page' do
-      expect(page).to have_link "Discount Info", count: merchant_1.bulk_discounts.length
+      merchant_1.bulk_discounts.each do |bulk_discount|
+        visit merchant_bulk_discounts_path(merchant_1)
+        within("#bulk_discount_#{bulk_discount.id}") do
+          expect(page).to have_link "Discount Info"
+          click_link "Discount Info"
+          expect(current_path).to eq merchant_bulk_discount_path(merchant_1, bulk_discount)
+        end
+      end
     end
 
     describe 'Delete Link' do
