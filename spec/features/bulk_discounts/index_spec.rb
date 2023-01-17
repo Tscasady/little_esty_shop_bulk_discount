@@ -74,13 +74,14 @@ RSpec.describe 'The bulk discount index page', type: :feature do
       end
 
       it 'this button redirects to the new discount page with prefilled forms' do
+        holidays = HolidayData.new.holidays
         
         within("#holiday_1") do
           click_button "Create Holiday Discount"
         end
 
         expect(current_path).to eq new_merchant_bulk_discount_path(merchant_1)
-        expect(page).to have_field "Name", with: "" 
+        expect(page).to have_field "Name", with: "#{holidays[1].name}" 
         expect(page).to have_field "Discount", with: 30
         expect(page).to have_field "Threshold", with: 2
       end

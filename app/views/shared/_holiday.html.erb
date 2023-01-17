@@ -3,6 +3,6 @@
 <br>
 <%= "Date: #{holiday.date.strftime("%A, %B %-d, %Y")}" %>
 <br>
-<%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path, method: :get %>
+<%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path, method: :get, params: {name: "#{holiday.name}", threshold: 2, discount: 30} %>
 <br>
 </div>
