@@ -68,9 +68,9 @@ RSpec.describe InvoiceItem, type: :model do
     end
     describe 'discount' do
       it 'returns the discount that has been applied' do
-        expect(@ii_1.discount).to eq 20
-        expect(@ii_2.discount).to eq 30
-        expect(@ii_3.discount).to eq nil
+        expect(@ii_1.discount.try(:discount)).to eq 20
+        expect(@ii_2.discount.try(:discount)).to eq 30
+        expect(@ii_3.discount.try(:discount)).to eq nil
       end
     end
   end
