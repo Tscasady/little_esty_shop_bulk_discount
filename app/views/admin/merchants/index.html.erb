@@ -17,7 +17,7 @@
       <ul class='mr-auto col-sm-4'>
         <% @merchants.top_merchants.each do |m| %>
           <section id="toppy-<%= m.id %>">
-            <li><%= link_to "#{m.name}", admin_merchant_path(m) %> - $<%= m.total_revenue %> in sales</li>
+            <li><%= link_to "#{m.name}", admin_merchant_path(m) %> - <%= price(m.total_revenue) %> in sales</li>
           </section>
           <% if m.best_day.present? %>
             <section id="top-<%= m.id %>">
