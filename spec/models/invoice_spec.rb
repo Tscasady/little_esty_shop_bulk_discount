@@ -38,7 +38,7 @@ RSpec.describe Invoice, type: :model do
       it 'returns the discounted revenue if only one item is discounted' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 50, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @merchant1)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 20, merchant: @merchant1)
 
         expect(@invoice_1.discounted_revenue).to eq(8250)
       end
@@ -46,8 +46,8 @@ RSpec.describe Invoice, type: :model do
       it 'returns the best discount when one item has multiple discounts available' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 50, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @merchant1)
-        @bd_2 = BulkDiscount.create!(threshold: 10, discount: 30, merchant: @merchant1)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 20, merchant: @merchant1)
+        @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 10, discount: 30, merchant: @merchant1)
 
         expect(@invoice_1.discounted_revenue).to eq(7050)
       end
@@ -55,8 +55,8 @@ RSpec.describe Invoice, type: :model do
       it 'can return the discount when one item has one discount, and one item has a different discount' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 50, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @merchant1)
-        @bd_2 = BulkDiscount.create!(threshold: 5, discount: 10, merchant: @merchant1)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 20, merchant: @merchant1)
+        @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 5, discount: 10, merchant: @merchant1)
 
         expect(@invoice_1.discounted_revenue).to eq(8225)
       end
@@ -64,7 +64,7 @@ RSpec.describe Invoice, type: :model do
       it 'returns the regular revenue when there are no discounts apply' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 50, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 30, discount: 20, merchant: @merchant1)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 30, discount: 20, merchant: @merchant1)
 
         expect(@invoice_1.discounted_revenue).to eq(10250)
       end
@@ -72,8 +72,8 @@ RSpec.describe Invoice, type: :model do
       it 'can return the discounted revenue without applying discounts to other merchants items' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_9.id, quantity: 5, unit_price: 1500, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 30, merchant: @merchant1)
-        @bd_2 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @merchant1)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 30, merchant: @merchant1)
+        @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 5, discount: 20, merchant: @merchant1)
 
         expect(@invoice_1.discounted_revenue).to eq(14500)
       end
@@ -81,8 +81,8 @@ RSpec.describe Invoice, type: :model do
       it 'can return the discounted revenue by applying discounts to from various merchants' do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 1000, status: 2)
         @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_9.id, quantity: 5, unit_price: 1500, status: 1)
-        @bd_1 = BulkDiscount.create!(threshold: 10, discount: 30, merchant: @merchant1)
-        @bd_2 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @merchant2)
+        @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 30, merchant: @merchant1)
+        @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 5, discount: 20, merchant: @merchant2)
 
         expect(@invoice_1.discounted_revenue).to eq(13000)
       end

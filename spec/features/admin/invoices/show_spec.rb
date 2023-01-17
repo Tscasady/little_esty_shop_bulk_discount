@@ -18,8 +18,8 @@ describe 'Admin Invoices Show Page' do
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
 
-    @bd_1 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @m1)
-    @bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: @m1)
+    @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 5, discount: 20, merchant: @m1)
+    @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 20, discount: 30, merchant: @m1)
 
     visit admin_invoice_path(@i1)
   end

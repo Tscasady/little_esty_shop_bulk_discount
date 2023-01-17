@@ -161,7 +161,7 @@ describe Merchant do
 
     it 'total_revenue_for_merchant()' do
       #Confirms unused discount
-      bd_1 = BulkDiscount.create!(threshold: 5, discount: 20, merchant: @merchant1)
+      bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 5, discount: 20, merchant: @merchant1)
       #Ignores items that do not belong to merchant
       invoice_9 = Invoice.create!(customer_id: @customer_6.id, status: 2)
       ii_11 = InvoiceItem.create!(invoice_id: invoice_9.id, item_id: @item_5.id, quantity: 1, unit_price: 1500, status: 1, created_at: "2012-04-04 14:54:09")
@@ -177,8 +177,8 @@ describe Merchant do
       @ii_12 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_6.id, quantity: 20, unit_price: 1000, status: 1, created_at: "2012-04-04 14:54:09")
       @ii_13 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_4.id, quantity: 10, unit_price: 100, status: 1, created_at: "2012-04-04 14:54:09")
       @ii_14 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_3.id, quantity: 1, unit_price: 500, status: 1, created_at: "2012-04-04 14:54:09")
-      @bd_1 = BulkDiscount.create!(threshold: 10, discount: 20, merchant: @merchant1)
-      @bd_2 = BulkDiscount.create!(threshold: 20, discount: 30, merchant: @merchant2)
+      @bd_1 = BulkDiscount.create!(name: "BD_1", threshold: 10, discount: 20, merchant: @merchant1)
+      @bd_2 = BulkDiscount.create!(name: "BD_2", threshold: 20, discount: 30, merchant: @merchant2)
 
       expect(@merchant1.discounted_revenue(@invoice_9)).to eq(1300)
       expect(@merchant2.discounted_revenue(@invoice_9)).to eq(15500.0)
