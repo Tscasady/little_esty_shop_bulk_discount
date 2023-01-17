@@ -1,6 +1,6 @@
 require 'rails_helper'
 include ActionView::Helpers::NumberHelper
-
+include ApplicationHelper
 
 RSpec.describe 'invoices show' do
   before :each do
@@ -106,6 +106,14 @@ RSpec.describe 'invoices show' do
 
     within("#the-status-#{@ii_11.id}") do
       expect(page).to have_content "20"
+    end
+  end
+
+  it 'has a link to an applied discount' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within("#the-status-#{@ii_11.id}") do
+      expect(page).to have_link "20"
     end
   end
 
