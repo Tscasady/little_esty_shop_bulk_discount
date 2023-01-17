@@ -10,7 +10,8 @@ RSpec.describe 'The Bulk Discount Show page', type: :feature do
       visit merchant_bulk_discount_path(merchant_1, bd_1)
     end
 
-    it 'displays threshold and percent discount of the bulk discount' do
+    it 'displays the name, threshold, and percent discount of the bulk discount' do
+      expect(page).to have_content "Discount Name: #{bd_1.name}"
       expect(page).to have_content "Discount: #{bd_1.discount}%"
       expect(page).to have_content "Threshold: #{bd_1.threshold}"
     end
