@@ -114,7 +114,10 @@ RSpec.describe 'invoices show' do
 
     within("#the-status-#{@ii_11.id}") do
       expect(page).to have_link "20"
+      click_link "20"
     end
+
+    expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @bd_1)
   end
 
   it "shows 'None' if no discount was applied" do

@@ -50,7 +50,7 @@
             <td style="text-align:center"><%= price(i.unit_price) %></td>
             <td style="text-align:center">
               <% if i.discount.try(:discount) %>
-                <%= link_to i.discount.discount, url: merchant_bulk_discount_path(@merchant, i.discount) %>
+                <%= link_to "#{i.discount.discount}%", merchant_bulk_discount_path(@merchant, i.discount) %>
               <% else %>
                 <%= "None" %>
               <% end %>
